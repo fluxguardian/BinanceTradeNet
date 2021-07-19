@@ -14,15 +14,19 @@ namespace TradeConsole
     {
         public static string SecretKey { get; private set; } = ConfigurationManager.AppSettings["SecretKey"];
         public static string ApiKey { get; private set; } = ConfigurationManager.AppSettings["ApiKey"];
+        public static string ApiPush { get; private set; } = ConfigurationManager.AppSettings["PushKey"];
         public static string Pair { get; private set; } = "BTCUSD";
         public static string BaseUrl { get; private set; } = "https://dapi.binance.com/";
+        public static string PushBaseUrl { get; private set; } = "https://api.pushbullet.com/";
+        public static string PushUrl { get; private set; } = "v2/pushes";
         public static string OrderUrl { get; private set; } = "dapi/v1/order";
         public static string TimeUrl { get; private set; } = "dapi/v1/time";
         public static string BookUrl { get; private set; } = "dapi/v1/ticker/bookTicker?pair=" + Pair;
         public static string ListenKeyUrl { get; private set; } = "dapi/v1/listenKey";
-        public static string CurrentSymbol { get; set; } = Pair.ToLower() + "_210924";
-        public static string NextSymbol { get; set; } = Pair.ToLower() + "_211231";
-        public static string BookTickerUrl { get; set; } = "wss://dstream.binance.com/stream?streams=" + CurrentSymbol + "@bookTicker/" + NextSymbol + "@bookTicker";
+        public static string BatchOrdersUrl { get; private set; } = "/dapi/v1/batchOrders";
+        public static string CurrentSymbol { get; set; } = Pair+ "_210924";
+        public static string NextSymbol { get; set; } = Pair + "_211231";
+        public static string BookTickerUrl { get; set; } = "wss://dstream.binance.com/stream?streams=" + CurrentSymbol.ToLower() + "@bookTicker/" + NextSymbol.ToLower() + "@bookTicker";
         public static string StreamsHandlerUrl { get; set; } = "wss://dstream.binance.com/ws/";
         public static string DBDomen { get; set; } = ConfigurationManager.AppSettings["DBDomen"];
         public static string DataBase { get; set; } = ConfigurationManager.AppSettings["DataBase"];

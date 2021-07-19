@@ -29,27 +29,25 @@ namespace TradeConsole
             Collection = DataBase.GetCollection<BsonDocument>(PairCollection);
         }
 
-        public List<JsonStructure.DBData> GetLastValue(int count)
+        public List<Structure.DBData> GetLastValue(int count)
         {
             return LastValues(count);
         }
 
-        public List<JsonStructure.DBData> GetLastValue()
+        public List<Structure.DBData> GetLastValue()
         {
             return LastValues(1);
         }
 
-        private List<JsonStructure.DBData> LastValues(int count)
+        private List<Structure.DBData> LastValues(int count)
         {
             var findedList = Collection.Find(new BsonDocument()).Sort("{_id:-1}").Limit(count).ToList();
-            var findedArray = new List<JsonStructure.DBData>();
+            var findedArray = new List<Structure.DBData>();
             foreach (var line in findedList)
             {
-                string jsonLine = line.ToString().Replace($"NumberLong(", "").Replace(")", "");
-                findedArray.Add(JsonConvert.DeserializeObject<JsonStructure.DBData>(jsonLine));
-
+                string jsonLine = line.ToString().Replace("NumberLong(", "").Replace(")", "");
+                findedArray.Add(JsonConvert.DeserializeObject<Structure.DBData>(jsonLine));
             }
-            findedArray.Reverse();
             return findedArray;
         }
     }
