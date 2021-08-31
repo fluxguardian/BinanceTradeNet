@@ -25,7 +25,7 @@ namespace TradeConsole
 
         public static void Log(string message)
         {
-            File.AppendAllText("log.txt", DateTime.Now.ToString("dd MMMM yyyy | HH:mm:ss") + ": " + message + "\n");
+            File.AppendAllText(ApiSettings.Pair +"log.txt", DateTime.Now.ToString("dd MMMM yyyy | HH:mm:ss") + ": " + message + "\n");
         }
 
         public static string HashSHA256(byte[] data, byte[] key)
@@ -38,6 +38,10 @@ namespace TradeConsole
                 res += b.ToString("x2");
             }
             return res;
+        }
+        public static void CsvLog(string message)
+        {
+            File.AppendAllText(ApiSettings.Pair + ".csv", DateTime.Now.ToString("dd MMMM yyyy | HH:mm:ss") + ";" + message + "\n");
         }
     }
 }

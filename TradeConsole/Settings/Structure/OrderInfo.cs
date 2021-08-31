@@ -44,7 +44,7 @@ namespace Structure
         public string OrderLastFilledQuantity { get; set; }
 
         [JsonProperty("z")]
-        public string OrderFilledAccumulatedQuantity { get; set; }
+        public int OrderFilledAccumulatedQuantity { get; set; }
 
         [JsonProperty("L")]
         public string LastFilledPrice { get; set; }

@@ -11,7 +11,11 @@ namespace TradeConsole
     {
         public int MovingAverageLength { get; set; }
         public int StochasticLenght { get; set; }
+        public double StandardDeviationMult { get; set; }
         public double StandardDeviation { get; set; }
+        public double StandardDeviationMax { get; set; }
+        public double StandardDeviationMin { get; set; }
+
         public int TimeLine { get; set; }
         public int TimeSize { get; set; } = 5;
         public double Spread { get; set; }
@@ -95,18 +99,28 @@ namespace TradeConsole
             }
             Stochastic = sum / StochasticLenght;
         }
+        public double GetStandardDeviation(List<double> someDoubles)
+        {
+            double average = someDoubles.Average();
+            double sumOfSquaresOfDifferences = someDoubles.Select(val => (val - average) * (val - average)).Sum();
+            double sd = Math.Sqrt(sumOfSquaresOfDifferences / someDoubles.Count);
+            return sd;
+        }
 
         public void Analaysis()
         {
+            StandardDeviation = GetStandardDeviation(SpreadList);
+            StandardDeviationMax = MovingAverage + StandardDeviation * StandardDeviationMult;
+            StandardDeviationMin = MovingAverage - StandardDeviation * StandardDeviationMult;
             if (Spread != 0)
             {
 
-                if (Spread > MovingAverage * (1 + StandardDeviation) && Stochastic >80)
+                if (Spread > StandardDeviationMax && Stochastic > 80)
                 {
                     Signal = true;
                     DealType = DealType.Short;
                 }
-                else if (Spread < MovingAverage * (1 - StandardDeviation) && Stochastic < 20)
+                else if (Spread < StandardDeviationMin && Stochastic < 20)
                 {
                     Signal = true;
                     DealType = DealType.Long;
@@ -122,8 +136,7 @@ namespace TradeConsole
                 {
                     TimeTempPush = timeNow;
 
-                    Tools.Push(Spread + " " + MovingAverage * (1 + StandardDeviation) + " " + MovingAverage * (1 - StandardDeviation) + " " + Stochastic);
-                    Tools.Log(Spread + " " + MovingAverage * (1 + StandardDeviation) + " " + MovingAverage * (1 - StandardDeviation) + " " + Stochastic);
+                    Tools.Log(Spread + " " + StandardDeviationMax + " " + StandardDeviationMin + " " + Stochastic);
                 }
             }
             else
