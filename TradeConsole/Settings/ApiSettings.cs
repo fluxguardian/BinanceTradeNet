@@ -16,7 +16,7 @@ namespace TradeConsole
         public static string ApiKey { get; private set; } = ConfigurationManager.AppSettings["ApiKey"];
         public static string ApiPush { get; private set; } = ConfigurationManager.AppSettings["PushKey"];
         public static string Pair { get; private set; } = "BNBUSD";
-        public static string BaseUrl { get; private set; } = "https://dapi.binance.com/";
+        public static string BaseUrl { get; private set; } = "https://ftx.com/api";
         public static string PushBaseUrl { get; private set; } = "https://api.pushbullet.com/";
         public static string PushUrl { get; private set; } = "v2/pushes";
         public static string OrderUrl { get; private set; } = "dapi/v1/order";
